@@ -32,6 +32,7 @@ const PostStackScreen = () => {
         screenOptions={navigatorOptions}
         >
         <PostStack.Screen
+          // initialRouteName='Main'
           name='Main'
           component={MainScreen}
           />
@@ -163,6 +164,7 @@ export const AppNavigation = () => {
         }}
       >
       <MainNavigator.Screen
+        initialRouteName='PostScreenNav'
         name='PostScreenNav'
         component={BottomNavigatorStackScreen}
         options={{

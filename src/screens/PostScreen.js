@@ -1,23 +1,40 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useCallback} from 'react'
 import {View, Text, StyleSheet, Image, Button, ScrollView, Alert} from 'react-native'
+import {useDispatch, useSelector} from 'react-redux'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
-import {DATA} from '../data'
 import { THEME } from '../theme'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
+import { toggleBooked, removePost } from '../store/actions/postActions'
 
 export const PostScreen = ({navigation, route}) => {
-  const postDate = route.params.['date']
-  const postId = route.params.['postId']
-  const post = DATA.find(post => post.id === postId)
+  const dispatch = useDispatch()
+  const postDate = route.params.date
+  const postId = route.params.postId
+  const post = useSelector(state => state.post.allPosts.find(postItem => postItem.id === postId))
 
 
-  // useEffect(() => {
-  //   navigation.setParams({
-  //     booked: post.booked
-  //   })
-  // }, [])
+  useEffect(() => {
+    navigation.setParams({
+      booked: 
+        route.params.booked = post.booked
+    })
+  }, [booked])
 
-  const booked = route.params.['booked']
+  const booked = useSelector(state => {
+    return state.post.bookedPosts.some(post => post.id === postId)
+  })
+
+  const toggleHandler = useCallback(() => {
+    dispatch(toggleBooked(post))
+  }, [dispatch, post])
+
+  useEffect(() => {
+    navigation.setParams({
+      toggleHandler: toggleHandler
+    })
+  }, [toggleHandler])
+
+  const ToggleHandler = route.params.toggleHandler
   const iconName = booked ? 'ios-star' : 'ios-star-outline'
 
   navigation.setOptions({
@@ -27,7 +44,7 @@ export const PostScreen = ({navigation, route}) => {
         <Item
           title='Take photo'
           iconName={iconName}
-          onPress={() => console.log('Press star')}/>
+          onPress={ToggleHandler}/>
       </HeaderButtons>
     )
 
@@ -42,13 +59,20 @@ export const PostScreen = ({navigation, route}) => {
           text: 'Отменить',
           style: 'cancel'
         },
-        { text: 'Удалить', style: 'destructive', onPress:() => {}}
+        { text: 'Удалить', 
+          style: 'destructive', 
+          onPress:() => {
+            navigation.navigate('PostScreenNav')
+            dispatch(removePost(postId))
+          }}
       ],
       { cancelable: false }
     );
   }
 
-
+  if (!post) {
+    return null
+  }
 
   return(
     <ScrollView>
