@@ -8,14 +8,16 @@ import { toggleBooked, removePost } from '../store/actions/postActions'
 
 export const PostScreen = ({navigation, route}) => {
   const dispatch = useDispatch()
-  const postDate = route.params.date
-  const postId = route.params.postId
+  const postDate = route.params?.date
+  // console.log(postDate);
+  // console.log(route);
+  const postId = route.params?.postId
   const post = useSelector(state => state.post.allPosts.find(postItem => postItem.id === postId))
-
+  // console.log(post.booked);
 
   useEffect(() => {
     navigation.setParams({
-      booked: 
+      booked:
         route.params.booked = post.booked
     })
   }, [booked])
@@ -34,7 +36,7 @@ export const PostScreen = ({navigation, route}) => {
     })
   }, [toggleHandler])
 
-  const ToggleHandler = route.params.toggleHandler
+  const ToggleHandler = route.params?.toggleHandler
   const iconName = booked ? 'ios-star' : 'ios-star-outline'
 
   navigation.setOptions({

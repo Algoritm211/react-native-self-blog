@@ -54,7 +54,7 @@ export const addPost = (post) => {
         }
 
         const id = await DB.createPost(payload)
-        console.log(id);
+        // console.log(id);
 
         payload.id = id
 

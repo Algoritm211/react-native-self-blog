@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "rn-self-blog",
+    "name": "Self Blog",
     "slug": "rn-self-blog",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/rn-icon.png",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/rn-splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#242832"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,10 +17,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.alexsdev.self-blog-rn-app",
+      "buildNumber": "1.0.0"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "android": {
+      "package": "com.alexsdev.self_blog_rn_app",
+      "versionCode": 1,
+      "permissions": ["CAMERA", "WRITE_EXTERNAL_STORAGE"]
     }
   }
 }
